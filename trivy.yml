@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  trivy-scanner:
+    container_name: trivy-scanner
+    hostname: trivy
+    image: owenwilson/trivy-scanner:latest
+    ports:
+      - "9898:8000"
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      trivy-net:
+
+networks:
+  trivy-net:

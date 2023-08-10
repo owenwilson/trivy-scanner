@@ -1,0 +1,9 @@
+FROM archlinux
+RUN pacman -Syy
+RUN yes | pacman -S trivy
+RUN yes | pacman -S python3 && yes | pacman -S python-pip && pip install json2html
+RUN mkdir -p /var/www
+WORKDIR /var/www
+COPY html.tpl /var/www/html.tpl
+RUN  echo "<h1>The scanner-trivy service is working</h1>" > index.html
+CMD ["python3", "-m", "http.server"]

@@ -1,0 +1,17 @@
+FROM alpine:3.17
+RUN apk update
+RUN apk add curl
+#RUN echo "nameserver 10.11.12.251" >> /etc/resolv.conf && curl --dns-server ut-ad-01.corp.dharbor.com 
+RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.32.1
+#curl --dns-server ut-ad-01.corp.dharbor.com github.com --verbose
+#RUN echo 'https://dl-cdn.alpinelinux.org/alpine/v3.14/community' >> /etc/apk/repositories
+#RUN echo 'https://dl-cdn.alpinelinux.org/alpine/v3.14/main' >> /etc/apk/repositories
+#RUN apk add python3 && apk add --no-cache wkhtmltopdf xvfb ttf-dejavu ttf-droid ttf-freefont ttf-liberation
+#RUN ln -s /usr/bin/wkhtmltopdf /usr/local/bin/wkhtmltopdf && chmod +x /usr/local/bin/wkhtmltopdf
+#RUN apk add python3 && apk add py3-pip && pip install json2html
+RUN apk add python3
+RUN mkdir -p /var/www
+WORKDIR /var/www
+COPY html.tpl /var/www/html.tpl
+RUN  echo "<h1>The scanner-trivy service is working</h1>" > index.html
+CMD ["python3", "-m", "http.server"]
